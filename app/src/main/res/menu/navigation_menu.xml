@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Chat"
+        android:id="@+id/chat_navigation"/>
+
+    <item android:title="Update"
+        android:id="@+id/update_navigation"/>
+
+</menu>
