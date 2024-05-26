@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "52402066762",
+    "project_id": "intelli-chat-61d60",
+    "storage_bucket": "intelli-chat-61d60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52402066762:android:4e3597cf22395dd818ddb3",
+        "android_client_info": {
+          "package_name": "com.example.intelli_chat_cc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq3xVazUsN6C8_3g8nhreR1CBN2RNvm_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

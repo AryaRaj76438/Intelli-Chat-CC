@@ -1,21 +1,28 @@
 package com.example.intelli_chat_cc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.example.intelli_chat_cc.Adapter.MainPagerAdapter;
 import com.example.intelli_chat_cc.Adapter.RecentChatAdapter;
+import com.example.intelli_chat_cc.Utils.AndroidUtils;
 import com.example.intelli_chat_cc.databinding.ActivityMainBinding;
 import com.example.intelli_chat_cc.models.ChatRoomModel;
 import com.example.intelli_chat_cc.models.Status;
 import com.example.intelli_chat_cc.models.UserModel;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
 
     ActivityMainBinding binding;
     @Override
@@ -23,6 +30,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Drawer Layout
+        binding.btnToggle.setOnClickListener(v -> binding.drawerLayout.open());
+
+        binding.navigationView.setNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            AndroidUtils.ToastMessage(MainActivity.this, "Selected ID");
+            if(itemId == R.id.profileSideMenu){
+                startActivity(new Intent(MainActivity.this,UserProfileActivity.class));
+                AndroidUtils.ToastMessage(MainActivity.this, "Selected Profile");
+            }
+            AndroidUtils.ToastMessage(MainActivity.this, "Something else");
+            binding.drawerLayout.close();
+            return false;
+        });
+
 
         // Creating User
         UserModel user1 = new UserModel("1","user1", "user1@gmail.com",

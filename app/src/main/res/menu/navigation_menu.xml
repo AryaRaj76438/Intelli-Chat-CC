@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Chat"
-        android:id="@+id/chat_navigation"/>
+        <item android:title="Profile"
+            android:id="@+id/profileSideMenu"
+            android:icon="@drawable/profile2"/>
 
-    <item android:title="Update"
-        android:id="@+id/update_navigation"/>
+        <item android:title="Login"
+            android:id="@+id/loginSideMenu"
+            android:icon="@drawable/profile2"/>
+
+
+
+    <item android:title="Logout"
+        android:id="@+id/logoutSideMenu"
+        android:icon="@drawable/profile2"/>
+
+    <item android:icon="@drawable/profile2"
+        android:id="@+id/shareSideMenu"
+        android:title="Share"/>
 
 </menu>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:context=".ChatActivity">
 
     <LinearLayout
@@ -15,6 +16,7 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/backBtnChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.8"
@@ -24,6 +26,7 @@
             android:background="@android:color/transparent"/>
 
         <ImageView
+            android:id="@+id/userProfileImageChat"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/profile2"
@@ -34,6 +37,7 @@
             android:padding="2dp"/>
 
         <TextView
+            android:id="@+id/usernameChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Username"
@@ -45,7 +49,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/message_box"
+        android:id="@+id/messageRecyclerBoxChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="3dp"
@@ -60,17 +64,21 @@
         android:layout_alignParentBottom="true">
 
         <EditText
+            android:id="@+id/messageBoxChat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Write your message"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:maxLines="3"/>
 
         <ImageView
+            android:id="@+id/sendBtnChat"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/send"
             android:alpha="0.8"
+            android:layout_gravity="center"
             android:padding="2dp"
             android:layout_margin="2dp"/>
 
