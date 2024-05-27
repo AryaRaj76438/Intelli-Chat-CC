@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:title="Profile"
-            android:id="@+id/profileSideMenu"
-            android:icon="@drawable/profile2"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <item android:title="Login"
-            android:id="@+id/loginSideMenu"
-            android:icon="@drawable/profile2"/>
+    <item android:title="Search User"
+        android:id="@+id/searchUserProfile"
+        android:icon="@drawable/search_alt_2_svgrepo_com"
+        app:showAsAction="always"/>
 
+    <item android:title="Profile"
+        android:id="@+id/profileSideMenu"
+        android:icon="@drawable/baseline_arrow_back_24" />
 
+    <item android:title="Login"
+        android:id="@+id/loginSideMenu" />
 
     <item android:title="Logout"
         android:id="@+id/logoutSideMenu"
-        android:icon="@drawable/profile2"/>
+        />
 
-    <item android:icon="@drawable/profile2"
-        android:id="@+id/shareSideMenu"
+    <item android:id="@+id/shareSideMenu"
         android:title="Share"/>
 
 </menu>

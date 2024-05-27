@@ -13,45 +13,64 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.intelli_chat_cc.ChatActivity;
 import com.example.intelli_chat_cc.R;
+import com.example.intelli_chat_cc.Utils.AndroidUtils;
+import com.example.intelli_chat_cc.Utils.FirebaseUtils;
 import com.example.intelli_chat_cc.models.ChatRoomModel;
+import com.example.intelli_chat_cc.models.UserModel;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-public class RecentChatAdapter extends RecyclerView.Adapter<RecentChatAdapter.ViewHolder> {
-    private final ArrayList<ChatRoomModel> chatRoomModelArray = new ArrayList<>();
+public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, RecentChatAdapter.ViewHolder> {
     Context context;
-
-    public RecentChatAdapter(Context context){
+    public RecentChatAdapter(@NonNull FirestoreRecyclerOptions<ChatRoomModel> options, Context context) {
+        super(options);
         this.context = context;
     }
 
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull ChatRoomModel model) {
+        FirebaseUtils.retrieveOtherUserFromChatroom(model.getUserIds()).get()
+                .addOnCompleteListener(task -> {
+                   if(task.isSuccessful()){
+                       // Fetch other model
+                       UserModel otherUser = task.getResult().toObject(UserModel.class);
+                       boolean lastMessageSender = model.getLastMesssageSenderId().equals(FirebaseUtils.getCurrentUserID());
+
+                       assert otherUser != null;
+
+                       holder.usernameTxt.setText(otherUser.getUsername());
+                       holder.lastMessageTimeTxt.setText(FirebaseUtils.timeStampToString(model.getLastMessageTime()));
+                       String lastMessage = model.getLastMessage();
+                       if(model.getLastMessage().length()>10){
+                           lastMessage = lastMessage.substring(0,10)+"...";
+                       }
+                       if(lastMessageSender){
+                           holder.lastMessageTxt.setText("You: "+lastMessage);
+                       }else{
+                           String tempSender = otherUser.getUsername();
+                           if(tempSender.length()>5) {
+                               tempSender = tempSender.substring(0, 5);
+                           }
+                           holder.lastMessageTxt.setText(tempSender+": "+lastMessage);
+                       }
+
+                       holder.itemView.setOnClickListener(
+                               v->{
+                                   Intent intent = new Intent(context, ChatActivity.class);
+                                   AndroidUtils.passUserModelAsIntent(intent,otherUser);
+                                   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                   context.startActivity(intent);
+                               }
+                       );
+                   }
+                });
+    }
 
     @NonNull
     @Override
-    public RecentChatAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =LayoutInflater.from(context).inflate(R.layout.recent_chat_fragment,parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.recent_chat_row, parent, false);
         return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecentChatAdapter.ViewHolder holder, int position) {
-
-        // Assumption it's user
-        ChatRoomModel chatRoom = chatRoomModelArray.get(position);
-        holder.lastMessageTxt.setText(chatRoom.getLastMessage());
-        holder.usernameTxt.setText("Arya");
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ChatActivity.class);
-            context.startActivity(intent);
-
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return chatRoomModelArray.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,9 +85,5 @@ public class RecentChatAdapter extends RecyclerView.Adapter<RecentChatAdapter.Vi
             lastMessageTimeTxt = itemView.findViewById(R.id.recent_row_last_messagetime);
             profilePic = itemView.findViewById(R.id.recent_row_profile_image);
         }
-    }
-
-    public void addChatRoomModel(ChatRoomModel chatRoomModel){
-        chatRoomModelArray.add(chatRoomModel);
     }
 }

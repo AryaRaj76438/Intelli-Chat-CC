@@ -15,12 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"/>
-
-        <include layout="@layout/recent_chat_fragment"/>
-        <include layout="@layout/recent_chat_fragment"/>
-        <include layout="@layout/recent_chat_fragment"/>
-        <include layout="@layout/recent_chat_fragment"/>
-
     </LinearLayout>
 
 </FrameLayout>

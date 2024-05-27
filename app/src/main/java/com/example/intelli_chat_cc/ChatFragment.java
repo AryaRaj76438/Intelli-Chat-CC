@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.intelli_chat_cc.Adapter.RecentChatAdapter;
+import com.example.intelli_chat_cc.Utils.FirebaseUtils;
 import com.example.intelli_chat_cc.models.ChatRoomModel;
-import com.google.firebase.Timestamp;
-
-import java.util.Arrays;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
 
 
 public class ChatFragment extends Fragment {
@@ -29,13 +29,39 @@ public class ChatFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_chat, container, false);
         recyclerView = view.findViewById(R.id.recylcerViewFragmentChat);
 
-        recentChatAdapter = new RecentChatAdapter(getContext());
+        recentChatRecyclerView();
+        return  view;
+    }
+
+    private void recentChatRecyclerView(){
+        Query query = FirebaseUtils.getAllChatroomCollectionReference()
+                .whereArrayContains("userIds", FirebaseUtils.getCurrentUserID())
+                .orderBy("lastMessageTime", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<ChatRoomModel> options = new  FirestoreRecyclerOptions.Builder<ChatRoomModel>()
+                .setQuery(query, ChatRoomModel.class).build();
+
+        recentChatAdapter = new RecentChatAdapter(options, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(recentChatAdapter);
+        recentChatAdapter.startListening();
+    }
 
-        recentChatAdapter.addChatRoomModel(new ChatRoomModel("1", Arrays.asList("user1", "user2"), Timestamp.now(), "user1", "Hello, how are you?"));
-        recentChatAdapter.addChatRoomModel(new ChatRoomModel("2", Arrays.asList("user3", "user4"), Timestamp.now(), "user3", "What's up?"));
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(recentChatAdapter!=null) recentChatAdapter.startListening();
+    }
 
-        return  view;
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(recentChatAdapter!=null) recentChatAdapter.stopListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(recentChatAdapter!=null) recentChatAdapter.onDataChanged();
     }
 }

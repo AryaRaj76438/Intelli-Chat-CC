@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_alignParentStart="true"
+        android:id="@+id/leftChatLayout"
+        android:layout_marginEnd="100dp">
+
+        <TextView
+            android:id="@+id/messageReceiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Hey, It's Arya"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rightChatLayout"
+        android:layout_alignParentEnd="true"
+        android:padding="3dp"
+        android:layout_marginStart="100dp">
+
+        <TextView
+            android:id="@+id/messageSender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Hey, It's Arya"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
