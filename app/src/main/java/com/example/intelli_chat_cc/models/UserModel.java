@@ -1,8 +1,15 @@
 package com.example.intelli_chat_cc.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.firebase.Timestamp;
 
+@Entity
 public class UserModel {
+    @PrimaryKey
+    @NonNull
     private String userId;
     private String username;
     private String email;

@@ -1,4 +1,4 @@
-package com.example.intelli_chat_cc;
+package com.example.intelli_chat_cc.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,32 +8,33 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-public class MainPagerAdapter extends FragmentPagerAdapter {
-    private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
-    private final ArrayList<String> fragmentTitle = new ArrayList<>();
-    public MainPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+public class LoginPagerAdapter extends FragmentPagerAdapter {
+    private final ArrayList<Fragment> loginFragmentArray = new ArrayList<>();
+    private final ArrayList<String> loginFragmentTitle = new ArrayList<>();
+
+    public LoginPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragmentArrayList.get(position);
+        return loginFragmentArray.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragmentArrayList.size();
+        return loginFragmentArray.size();
     }
 
     public void addFragment(Fragment fragment, String title){
-        fragmentArrayList.add(fragment);
-        fragmentTitle.add(title);
+        loginFragmentArray.add(fragment);
+        loginFragmentTitle.add(title);
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return fragmentTitle.get(position);
+        return loginFragmentTitle.get(position);
     }
 }

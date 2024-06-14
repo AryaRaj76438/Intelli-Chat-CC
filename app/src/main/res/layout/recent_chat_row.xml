@@ -5,6 +5,7 @@
     android:padding="2dp"
     android:layout_margin="1dp"
     android:elevation="5dp"
+    android:backgroundTint="@color/charcoal"
     android:background="@drawable/rounder_background"
     android:layout_height="wrap_content">
 
@@ -14,8 +15,8 @@
 
         <ImageView
             android:id="@+id/recent_row_profile_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:alpha="0.65"
             android:src="@drawable/profile2"
             android:background="@drawable/circular_background"
@@ -34,7 +35,8 @@
             android:id="@+id/recent_row_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User 1"
+            android:textColor="@color/white"
+            android:text="username"
             android:textSize="16sp"
             android:textStyle="bold"
             android:padding="5dp" />
@@ -47,16 +49,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
+                android:textColor="@color/white"
                 android:maxLength="25"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:id="@+id/recent_row_last_message"
-                android:text="Hi, New User... Welcome to Let's Chat"/>
+                android:text=" Hi, New User... Welcome to Let's Chat"/>
 
             <TextView
                 android:id="@+id/recent_row_last_messagetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="10:00 pm"
                 android:padding="4dp"
                 android:layout_alignParentEnd="true"/>
