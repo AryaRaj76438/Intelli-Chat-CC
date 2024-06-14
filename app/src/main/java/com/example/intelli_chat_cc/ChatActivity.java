@@ -2,6 +2,7 @@ package com.example.intelli_chat_cc;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.View;
 
 import com.example.intelli_chat_cc.Adapter.MessageRecyclerAdapter;
 import com.example.intelli_chat_cc.Utils.AndroidUtils;
@@ -30,12 +33,14 @@ import com.google.firebase.firestore.Query;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
     ActivityChatBinding binding;
     String chatRoomId;
     ChatRoomModel chatRoomModel;
     UserModel otherUser;
+    private Toolbar toolbar;
 
     MessageRecyclerAdapter adapter;
 
@@ -45,13 +50,18 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        otherUser = AndroidUtils.getUserModelFromIntent(getIntent());
+        // Toolbar
+        toolbar = findViewById(R.id.appbarToolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        binding.backBtnChat.setOnClickListener(v-> {
+        toolbar.setNavigationOnClickListener(v -> {
             startActivity(new Intent(ChatActivity.this, MainActivity.class));
-            finish();
         });
-        binding.usernameChat.setText(otherUser.getUsername());
+
+        otherUser = AndroidUtils.getUserModelFromIntent(getIntent());
+        Objects.requireNonNull(getSupportActionBar()).setTitle(otherUser.getUsername());
+
 
         chatRoomId = FirebaseUtils.getChatRoomId(FirebaseUtils.getCurrentUserID(), otherUser.getUserId());
         // SetUp Chat Screen
@@ -60,6 +70,12 @@ public class ChatActivity extends AppCompatActivity {
 
         getOrCreateChatroomModel();
         chatRecyclerViewSetUp();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat_act_audio_video, menu);
+        return true;
     }
 
     void getOrCreateChatroomModel(){
@@ -103,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         binding.messageBoxChat.setText("");
+
                     }
                 });
     }
@@ -116,7 +133,7 @@ public class ChatActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<MessageModel> options = new FirestoreRecyclerOptions.Builder<MessageModel>()
                 .setQuery(query, MessageModel.class).build();
 
-        adapter = new MessageRecyclerAdapter(options, getApplicationContext());
+        adapter = new MessageRecyclerAdapter(options, getApplicationContext(), otherUser);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setReverseLayout(true);
 
@@ -135,5 +152,12 @@ public class ChatActivity extends AppCompatActivity {
         );
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 }

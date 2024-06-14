@@ -2,6 +2,7 @@ package com.example.intelli_chat_cc.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.intelli_chat_cc.ChatActivity;
 import com.example.intelli_chat_cc.R;
 import com.example.intelli_chat_cc.Utils.AndroidUtils;
+import com.example.intelli_chat_cc.Utils.CircleTransform;
 import com.example.intelli_chat_cc.Utils.FirebaseUtils;
 import com.example.intelli_chat_cc.models.ChatRoomModel;
 import com.example.intelli_chat_cc.models.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Firebase;
+import com.squareup.picasso.Picasso;
 
 public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, RecentChatAdapter.ViewHolder> {
     Context context;
@@ -41,18 +46,29 @@ public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, R
                        holder.usernameTxt.setText(otherUser.getUsername());
                        holder.lastMessageTimeTxt.setText(FirebaseUtils.timeStampToString(model.getLastMessageTime()));
                        String lastMessage = model.getLastMessage();
-                       if(model.getLastMessage().length()>10){
-                           lastMessage = lastMessage.substring(0,10)+"...";
+                       if(model.getLastMessage().length()>20){
+                           int lastSpaceIndex = lastMessage.substring(0, 20).lastIndexOf(' ');
+                           if(lastSpaceIndex != -1) lastMessage = lastMessage.substring(0,lastSpaceIndex);
+                           else lastMessage = lastMessage.substring(0, 20) + "...";
                        }
                        if(lastMessageSender){
                            holder.lastMessageTxt.setText("You: "+lastMessage);
                        }else{
-                           String tempSender = otherUser.getUsername();
-                           if(tempSender.length()>5) {
-                               tempSender = tempSender.substring(0, 5);
+                           String fullName = otherUser.getUsername();
+                           String firstName = fullName.split(" ")[0];
+                           if (firstName.length() > 5) {
+                               firstName = firstName.substring(0, 5);
                            }
-                           holder.lastMessageTxt.setText(tempSender+": "+lastMessage);
+                           holder.lastMessageTxt.setText(firstName + ": " + lastMessage);
                        }
+
+                       // Setup profile Image
+                       if(otherUser.getProfilePicsUrl().length()>1){
+                           Picasso.get().load(otherUser.getProfilePicsUrl())
+                                   .transform(new CircleTransform())
+                                   .into(holder.profilePic);
+                       }
+
 
                        holder.itemView.setOnClickListener(
                                v->{
@@ -70,6 +86,7 @@ public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, R
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recent_chat_row, parent, false);
+
         return new ViewHolder(view);
     }
 

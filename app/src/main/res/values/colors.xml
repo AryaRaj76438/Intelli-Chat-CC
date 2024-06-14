@@ -7,6 +7,13 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="charcoal">#36454F</color>
 
+    <color name="colorPrimary">#121212</color>
+    <color name="colorPrimaryDark">#1E1E1E</color>
+    <color name="colorAccent">#BB86FC</color>
+    <color name="textColor">#f0f0f0</color>
+    <color name="textBox">#07380f</color>
+    <color name="background">#5d635e</color>
     <color name="greenish">#4fbd6c</color>
 </resources>

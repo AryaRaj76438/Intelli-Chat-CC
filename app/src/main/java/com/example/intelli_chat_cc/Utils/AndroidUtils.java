@@ -8,12 +8,10 @@ import com.example.intelli_chat_cc.models.UserModel;
 import com.google.firebase.firestore.auth.User;
 
 public class AndroidUtils {
-
     // Display the toast-message to context
     public static void ToastMessage(Context context, String message){
         Toast.makeText(context,message,Toast.LENGTH_LONG).show();
     }
-
 
     public static void passUserModelAsIntent(Intent intent, UserModel userModel){
         intent.putExtra("email", userModel.getEmail());

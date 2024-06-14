@@ -1,10 +1,15 @@
 package com.example.intelli_chat_cc.Utils;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.intelli_chat_cc.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,11 +20,16 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class FirebaseUtils {
@@ -71,6 +81,17 @@ public class FirebaseUtils {
     public static String timeStampToString(Timestamp timestamp){
         return new SimpleDateFormat("HH:MM").format(timestamp.toDate());
     }
+
+
+
+
+    // Firestorage: to handle files, image
+    public static FirebaseStorage firestorage = FirebaseStorage.getInstance();
+
+    public static StorageReference getStorageReference(){
+        return firestorage.getReference();
+    }
+
 
 
 }

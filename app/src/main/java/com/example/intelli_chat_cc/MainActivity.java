@@ -27,12 +27,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     private Toolbar toolbar;
-    ImageView searchUserBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         // Action bar
         toolbar = findViewById(R.id.appbarToolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Intelli-Chat");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Intelli-Chat");
 
         // Connect to pager
         binding.tabLayout.setupWithViewPager(binding.pager);
@@ -79,5 +79,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

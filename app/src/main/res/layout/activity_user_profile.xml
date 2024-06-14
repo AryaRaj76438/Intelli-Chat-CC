@@ -4,19 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/charcoal"
     android:maxWidth="500sp"
     android:orientation="vertical"
     tools:context=".UserProfileActivity">
 
-    <TextView
-        android:id="@+id/Profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:padding="8dp"
-        android:layout_gravity="center"/>
+    <include
+        layout="@layout/appbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +19,9 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="45dp"
             android:layout_gravity="center"
             app:cardElevation="1dp"
             android:backgroundTint="#D1D1D1">
@@ -111,6 +105,7 @@
                 android:padding="5dp"/>
 
             <TextView
+                android:id="@+id/phoneNumProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+91 111111111"
@@ -174,7 +169,7 @@
                 android:padding="5dp"
                 android:maxWidth="10dp"
                 android:layout_weight="1"
-                android:hint="Enter Full Name" />
+                android:hint="Enter email id" />
 
         </LinearLayout>
 

@@ -15,11 +15,13 @@ import com.example.intelli_chat_cc.ChatActivity;
 import com.example.intelli_chat_cc.R;
 import com.example.intelli_chat_cc.SearchUserActivity;
 import com.example.intelli_chat_cc.Utils.AndroidUtils;
+import com.example.intelli_chat_cc.Utils.CircleTransform;
 import com.example.intelli_chat_cc.Utils.FirebaseUtils;
 import com.example.intelli_chat_cc.models.ChatRoomModel;
 import com.example.intelli_chat_cc.models.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.squareup.picasso.Picasso;
 
 public class SearchUserAdapter extends FirestoreRecyclerAdapter<UserModel, SearchUserAdapter.ViewModel> {
     Context context;
@@ -31,6 +33,12 @@ public class SearchUserAdapter extends FirestoreRecyclerAdapter<UserModel, Searc
     @Override
     protected void onBindViewHolder(@NonNull SearchUserAdapter.ViewModel holder, int position, @NonNull UserModel model) {
         holder.phonenum.setText(model.getPhoneNumber());
+
+        if(model.getProfilePicsUrl().length()>2){
+            Picasso.get().load(model.getProfilePicsUrl())
+                    .transform(new CircleTransform())
+                    .into(holder.profileImage);
+        }
         if(model.getUserId().equals(FirebaseUtils.getCurrentUserID())){
             holder.username.setText(model.getUsername()+"(You)");
         }else{
@@ -38,9 +46,6 @@ public class SearchUserAdapter extends FirestoreRecyclerAdapter<UserModel, Searc
         }
 
         holder.itemView.setOnClickListener(v -> {
-
-            AndroidUtils.ToastMessage(context, model.getUsername());
-
             Intent intent = new Intent(context, ChatActivity.class);
             AndroidUtils.passUserModelAsIntent(intent, model);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
