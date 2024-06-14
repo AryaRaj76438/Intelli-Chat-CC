@@ -1,79 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/charcoal"
+    android:padding="5dp"
     tools:context=".ChatActivity">
 
-    <LinearLayout
-        android:id="@+id/chat_toolbar"
+    <include
+        layout="@layout/appbar" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.8"
-            android:layout_margin="1dp"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:background="@android:color/transparent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messageRecyclerBoxChat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="3dp"
+            android:layout_above="@id/bottom_chat_layout"/>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/profile2"
-            android:layout_gravity="center"
-            android:alpha="0.7"
-            android:layout_margin="1dp"
-            android:background="@drawable/circular_background"
-            android:padding="2dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:layout_gravity="center"
-            android:textSize="17sp"
-            android:layout_marginLeft="4dp"
-            android:padding="3dp"/>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/message_box"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="3dp"
-        android:layout_below="@+id/chat_toolbar"
-        android:layout_above="@id/bottom_chat_layout"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom_chat_layout"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Write your message"
-            android:layout_weight="1"
-            android:maxLines="3"/>
+            android:id="@+id/bottom_chat_layout"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingStart="3dp"
+            android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/send"
-            android:alpha="0.8"
-            android:padding="2dp"
-            android:layout_margin="2dp"/>
+            <EditText
+                android:id="@+id/messageBoxChat"
+                android:layout_width="match_parent"
+                android:background="@drawable/circular_background"
+                android:layout_height="wrap_content"
+                android:hint="Write your message"
+                android:layout_weight="1"
+                android:paddingTop="5dp"
+                android:paddingStart="15dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:maxLines="3"/>
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/sendBtnChat"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/send"
+                android:alpha="0.8"
+                android:layout_gravity="center"
+                android:padding="2dp"
+                android:layout_margin="2dp"/>
 
-</RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
