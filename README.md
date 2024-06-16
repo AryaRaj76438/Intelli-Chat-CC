@@ -1,6 +1,6 @@
 # Intelli-Chat
 
-![Intelli-Chat Logo](path/to/your/logo.png)
+![Intelli-Chat Logo](https://drive.google.com/file/d/10FhI8AAlLyQbq1QYqamWYN932QMQcwrj/view?usp=sharing)
 
 Intelli-Chat is a feature-rich chat application for Android, designed to provide seamless communication between users. Built with modern technologies like Firebase, Node.js, and React, Intelli-Chat offers a robust and interactive user experience.
 
