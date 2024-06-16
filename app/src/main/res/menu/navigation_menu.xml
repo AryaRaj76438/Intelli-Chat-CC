@@ -4,21 +4,13 @@
 
     <item android:title="Search User"
         android:id="@+id/searchUserProfile"
-        android:icon="@drawable/search_alt_2_svgrepo_com"
+        android:icon="@drawable/search_plus_svgrepo_com"
         app:showAsAction="always"/>
 
     <item android:title="Profile"
         android:id="@+id/profileSideMenu"
         android:icon="@drawable/baseline_arrow_back_24" />
-
-    <item android:title="Login"
-        android:id="@+id/loginSideMenu" />
-
     <item android:title="Logout"
         android:id="@+id/logoutSideMenu"
         />
-
-    <item android:id="@+id/shareSideMenu"
-        android:title="Share"/>
-
 </menu>

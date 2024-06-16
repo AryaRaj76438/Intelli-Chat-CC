@@ -23,7 +23,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Firebase;
+import com.google.firebase.Timestamp;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, RecentChatAdapter.ViewHolder> {
     Context context;
@@ -31,7 +35,6 @@ public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, R
         super(options);
         this.context = context;
     }
-
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull ChatRoomModel model) {
         FirebaseUtils.retrieveOtherUserFromChatroom(model.getUserIds()).get()
@@ -44,7 +47,31 @@ public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, R
                        assert otherUser != null;
 
                        holder.usernameTxt.setText(otherUser.getUsername());
-                       holder.lastMessageTimeTxt.setText(FirebaseUtils.timeStampToString(model.getLastMessageTime()));
+
+                       // Time manage
+                       long messageTimeMillis = model.getLastMessageTime().toDate().getTime();
+                       long currentTimeMillis = Timestamp.now().toDate().getTime();
+                       long timeDiff = (currentTimeMillis - messageTimeMillis)/1000;
+
+                       if(timeDiff<60){
+                           holder.lastMessageTimeTxt.setText("Just now");
+                       }
+                       else if(timeDiff <3600){
+                           long minAgo = timeDiff/60;
+                           holder.lastMessageTimeTxt.setText(minAgo+" min ago");
+                       }
+                       else if(timeDiff<86400){
+                           holder.lastMessageTimeTxt.setText(FirebaseUtils.timeStampToString(model.getLastMessageTime()));
+                       }
+                       else {
+                           SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                           String formattedDate = dateFormat.format(model.getLastMessageTime().toDate());
+                           holder.lastMessageTimeTxt.setText(formattedDate);
+                       }
+
+
+
+
                        String lastMessage = model.getLastMessage();
                        if(model.getLastMessage().length()>20){
                            int lastSpaceIndex = lastMessage.substring(0, 20).lastIndexOf(' ');
@@ -86,7 +113,6 @@ public class RecentChatAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, R
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recent_chat_row, parent, false);
-
         return new ViewHolder(view);
     }
 

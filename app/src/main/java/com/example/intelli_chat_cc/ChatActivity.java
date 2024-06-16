@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 
 import com.example.intelli_chat_cc.Adapter.MessageRecyclerAdapter;
+import com.example.intelli_chat_cc.Adapter.SmartReplyAdapter;
 import com.example.intelli_chat_cc.Utils.AndroidUtils;
 import com.example.intelli_chat_cc.Utils.FirebaseUtils;
 import com.example.intelli_chat_cc.databinding.ActivityChatBinding;
@@ -29,10 +30,19 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.smartreply.FirebaseSmartReply;
+import com.google.firebase.ml.naturallanguage.smartreply.FirebaseTextMessage;
+import com.google.mlkit.nl.smartreply.SmartReply;
+import com.google.mlkit.nl.smartreply.SmartReplyGenerator;
+import com.google.mlkit.nl.smartreply.SmartReplySuggestion;
+import com.google.mlkit.nl.smartreply.SmartReplySuggestionResult;
+import com.google.mlkit.nl.smartreply.TextMessage;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
@@ -43,6 +53,10 @@ public class ChatActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     MessageRecyclerAdapter adapter;
+
+// SmartReply
+    private SmartReplyAdapter smartReplyAdapter;
+    private List<TextMessage> chatMessages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +80,24 @@ public class ChatActivity extends AppCompatActivity {
         chatRoomId = FirebaseUtils.getChatRoomId(FirebaseUtils.getCurrentUserID(), otherUser.getUserId());
         // SetUp Chat Screen
 
+        // Initialize smart reply RecyclerView
+        binding.smartReplyRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        smartReplyAdapter = new SmartReplyAdapter(new ArrayList<>(), this::onSmartReplyClicked);
+        binding.smartReplyRecyclerView.setAdapter(smartReplyAdapter);
+
+
         binding.sendBtnChat.setOnClickListener(v-> sendMessageToUser());
+        binding.smartReplyBtn.setOnClickListener(v -> {
+            if (binding.smartReplyerLinearLayout.getVisibility() == View.VISIBLE) {
+                binding.smartReplyerLinearLayout.setVisibility(View.GONE);
+            } else {
+                binding.smartReplyerLinearLayout.setVisibility(View.VISIBLE);
+            }
+        });
 
         getOrCreateChatroomModel();
         chatRecyclerViewSetUp();
+        setUpSmartReplyFeature();
     }
 
     @Override
@@ -159,5 +187,49 @@ public class ChatActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+
+
+    private void setUpSmartReplyFeature() {
+        SmartReplyGenerator smartReply = SmartReply.getClient();
+
+        FirebaseUtils.getChatRoomMessageReference(chatRoomId).addSnapshotListener((snapshots, e) -> {
+            if (e != null || snapshots == null) {
+                Log.w("ChatActivity", "listen:error", e);
+                return;
+            }
+
+            chatMessages.clear();
+            for (DocumentSnapshot doc : snapshots) {
+                MessageModel message = doc.toObject(MessageModel.class);
+                if (message != null) {
+                    chatMessages.add(TextMessage.createForRemoteUser(
+                            message.getMessage(),
+                            message.getMessageTime().toDate().getTime(),
+                            message.getMessageSenderId()
+                    ));
+                }
+            }
+            chatMessages.sort((msg1, msg2) -> Long.compare(msg1.getTimestampMillis(), msg2.getTimestampMillis()));
+
+
+            smartReply.suggestReplies(chatMessages)
+                    .addOnSuccessListener(result -> {
+                        if (result.getStatus() == SmartReplySuggestionResult.STATUS_SUCCESS) {
+                            List<String> suggestions = new ArrayList<>();
+                            for (SmartReplySuggestion suggestion : result.getSuggestions()) {
+                                suggestions.add(suggestion.getText());
+                            }
+                            smartReplyAdapter.updateSuggestion(suggestions);
+                        }
+                    })
+                    .addOnFailureListener(e1 -> Log.w("ChatActivity", "Smart reply failed.", e));
+        });
+    }
+
+
+    private void onSmartReplyClicked(String reply) {
+        binding.messageBoxChat.setText(reply);
     }
 }

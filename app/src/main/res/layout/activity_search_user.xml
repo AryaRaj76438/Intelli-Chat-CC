@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:padding="5dp"
+    android:background="@color/charcoal"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".SearchUserActivity">
@@ -45,7 +46,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:alpha="0.7"
-                android:background="@drawable/search_alt_2_svgrepo_com" />
+                android:background="@drawable/search_plus_svgrepo_com" />
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView

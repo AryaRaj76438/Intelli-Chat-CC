@@ -42,11 +42,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="username"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/emailProfile"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,11 +76,13 @@
                 android:text="UserId"
                 android:maxWidth="8dp"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/userIdProfile"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="UserId"
@@ -90,6 +94,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_margin="1dp"
@@ -98,6 +103,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="Contact Num"
                 android:maxWidth="8dp"
                 android:layout_weight="1"
@@ -109,6 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+91 111111111"
+                android:textColor="@color/white"
                 android:maxWidth="10dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -124,6 +131,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:text="Full Name"
                 android:maxWidth="8dp"
@@ -138,6 +146,8 @@
                 android:textSize="18sp"
                 android:maxWidth="10dp"
                 android:maxLines="1"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:padding="5dp"
                 android:layout_weight="1"
                 android:hint="Enter Full Name" />
@@ -155,6 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email ID"
+                android:textColor="@color/white"
                 android:maxWidth="8dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -165,12 +176,44 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/emailProfileEdt"
                 android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:maxLines="1"
                 android:padding="5dp"
                 android:maxWidth="10dp"
                 android:layout_weight="1"
                 android:hint="Enter email id" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="1dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Profile Created"
+                android:maxWidth="8dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/profileCreatedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white"
+                android:maxWidth="10dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:padding="5dp"/>
         </LinearLayout>
 
         <Button

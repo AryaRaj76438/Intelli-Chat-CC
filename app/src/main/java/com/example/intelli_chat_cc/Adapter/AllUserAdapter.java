@@ -13,25 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.intelli_chat_cc.ChatActivity;
 import com.example.intelli_chat_cc.R;
-import com.example.intelli_chat_cc.SearchUserActivity;
 import com.example.intelli_chat_cc.Utils.AndroidUtils;
 import com.example.intelli_chat_cc.Utils.CircleTransform;
 import com.example.intelli_chat_cc.Utils.FirebaseUtils;
-import com.example.intelli_chat_cc.models.ChatRoomModel;
 import com.example.intelli_chat_cc.models.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
-public class SearchUserAdapter extends FirestoreRecyclerAdapter<UserModel, SearchUserAdapter.ViewModel> {
+public class AllUserAdapter extends FirestoreRecyclerAdapter<UserModel, AllUserAdapter.ViewModel> {
     Context context;
-    public SearchUserAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options, Context context) {
+    public AllUserAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options, Context context) {
         super(options);
         this.context = context;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull SearchUserAdapter.ViewModel holder, int position, @NonNull UserModel model) {
+    protected void onBindViewHolder(@NonNull AllUserAdapter.ViewModel holder, int position, @NonNull UserModel model) {
         holder.phonenum.setText(model.getPhoneNumber());
 
         if(model.getProfilePicsUrl().length()>2){
@@ -55,7 +53,7 @@ public class SearchUserAdapter extends FirestoreRecyclerAdapter<UserModel, Searc
 
     @NonNull
     @Override
-    public SearchUserAdapter.ViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AllUserAdapter.ViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.search_user_recycler_row, parent, false);
         return new ViewModel(view);
     }
@@ -63,9 +61,9 @@ public class SearchUserAdapter extends FirestoreRecyclerAdapter<UserModel, Searc
     public class ViewModel extends RecyclerView.ViewHolder {
         TextView username, phonenum;
         ImageView profileImage;
-
         public ViewModel(@NonNull View itemView) {
             super(itemView);
+
             username = itemView.findViewById(R.id.usernameSearchUserList);
             phonenum = itemView.findViewById(R.id.phoneNumSearchUserList);
             profileImage = itemView.findViewById(R.id.searchUserProfileImage);

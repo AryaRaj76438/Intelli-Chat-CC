@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mainPagerAdapter.addFragment(new ChatFragment(), "Chats");
-        mainPagerAdapter.addFragment(new StatusFragment(), "Status");
+        mainPagerAdapter.addFragment(new StatusFragment(), "All User");
         binding.pager.setAdapter(mainPagerAdapter);
     }
 
@@ -68,10 +68,7 @@ public class MainActivity extends AppCompatActivity {
         }else if (item.getItemId()==R.id.searchUserProfile){
             startActivity(new Intent(MainActivity.this, SearchUserActivity.class));
         }
-        else if (item.getItemId() == R.id.shareSideMenu) {
-            AndroidUtils.ToastMessage(MainActivity.this, "Share");
-            return true;
-        }else if(item.getItemId() == R.id.logoutSideMenu){
+        else if(item.getItemId() == R.id.logoutSideMenu){
             FirebaseUtils.logoutUser();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             AndroidUtils.ToastMessage(MainActivity.this, "Logout");

@@ -31,6 +31,9 @@ import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -146,6 +149,11 @@ public class UserProfileActivity extends AppCompatActivity {
                             binding.emailProfile.setText(userModel.getEmail());
                             binding.emailProfileEdt.setText(userModel.getEmail());
                             binding.userIdProfile.setText(userModel.getUserId());
+
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                            Date profileCreatedDate = userModel.getTimeAdded().toDate();
+                            String formattedDate = dateFormat.format(profileCreatedDate);
+                            binding.profileCreatedDate.setText(formattedDate);
 
                             String pathProfileImage = "profileImage/"+FirebaseUtils.getCurrentUserID()+"/profileImage.jpg";
                             if(userModel.getProfilePicsUrl().length()>2){

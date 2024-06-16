@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:padding="2dp"
+    android:layout_height="wrap_content"
     android:layout_margin="1dp"
-    android:elevation="5dp"
-    android:backgroundTint="@color/charcoal"
     android:background="@drawable/rounder_background"
-    android:layout_height="wrap_content">
+    android:backgroundTint="@color/charcoal"
+    android:elevation="5dp"
+    android:orientation="horizontal"
+    android:padding="2dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,11 +17,11 @@
             android:id="@+id/recent_row_profile_image"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_margin="10dp"
             android:alpha="0.65"
-            android:src="@drawable/profile2"
             android:background="@drawable/circular_background"
             android:padding="2dp"
-            android:layout_margin="10dp"/>
+            android:src="@drawable/profile2" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,35 +35,35 @@
             android:id="@+id/recent_row_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:padding="5dp"
             android:text="username"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="5dp" />
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/recent_row_last_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:maxLength="25"
                 android:ellipsize="end"
+                android:maxLength="25"
+                android:maxLines="1"
                 android:singleLine="true"
-                android:id="@+id/recent_row_last_message"
-                android:text=" Hi, New User... Welcome to Let's Chat"/>
+                android:text=" Hi, New User... Welcome to Let's Chat"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/recent_row_last_messagetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="10:00 pm"
+                android:layout_alignParentEnd="true"
                 android:padding="4dp"
-                android:layout_alignParentEnd="true"/>
+                android:text="10:00 pm"
+                android:textColor="@color/white" />
         </RelativeLayout>
 
     </LinearLayout>
